@@ -1,0 +1,13 @@
+#!/bin/bash
+clean_up()
+{
+        networksetup -setsocksfirewallproxystate wi-fi off
+        echo "Goodbye."
+        exit 0
+}
+trap clean_up INT
+
+echo "Tunneling..."
+networksetup -setsocksfirewallproxy wi-fi 127.0.0.1 1111
+echo "Socks proxy enabled"
+ssh -ND 1111 -i [path_to_key] [user]@[host]
